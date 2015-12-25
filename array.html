@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Arrays in JS</title>
+</head>
+<body>
+	<script type="text/javascript">
+		// Creating Arrays from Strings
+		// Arrays can be created as the result of calling the split() function on a string.
+		var sentence = "the quick brown fox jumped over the lazy dog";
+		var words = sentence.split(" ");
+		for (var i = 0; i < words.length; ++i) {
+			document.writeln("word " + i + ": " + words[i]+"<br>");
+		}
+
+		// Aggregate Array Operations
+		// One way is assigning one array to another
+		var nums = [];
+		for (var i = 0; i < 10; ++i) {
+			nums[i] = i+1;
+		}
+		var samenums = nums;
+
+		// When we assign an array is one to another that means we actually assigning reference
+		// that's why if we make a change to the original array it will then affects on the assigning array
+		// This is called a shallow copy.
+		var nums = [];
+		for (var i = 0; i < 100; ++i) {
+			nums[i] = i+1;
+		}
+		var samenums = nums;
+		nums[0] = 400;
+		document.writeln(samenums[0]); // displays 400
+
+		/*A better alternative is to make a deep copy, so that each of the original array’s elements
+		is actually copied to the new array’s elements. An effective way to do this is to create a
+		function to perform the task*/ 
+		function copy(arr1, arr2) {
+			for (var i = 0; i < arr1.length; ++i) {
+				arr2[i] = arr1[i];
+			}
+		}
+
+		var nums = [];
+		for (var i = 0; i < 100; ++i) {
+			nums[i] = i+1;
+		}
+		var samenums = [];
+		copy(nums, samenums);
+		nums[0] = 400;
+		document.writeln(samenums[0]); // displays 1
+		document.writeln(nums[0]); // displays 400
+
+		
+		// Searching for a Value
+		// var names = ["David", "Cynthia", "Raymond", "David","Clayton", "Jennifer"];
+		// // var name = prompt("Enter a name to search for: ");
+		// var position = names.indexOf(name);
+		// var lastPos = names.lastIndexOf(name);
+		// if (position >= 0) {
+		// 	document.write("<br>"+"Found " + name + " at position " + position);
+		// 	document.write("<br>"+"Found " + name + " at position " + lastPos);
+		// }
+		// else {
+		// 	document.write(name + " not found in array.");
+		// }
+
+		// String Representations of Arrays
+		var names = ["David", "Cynthia", "Raymond", "David","Clayton", "Jennifer"];
+		var nameStr = names.join();
+		document.writeln(nameStr+"<br>");
+		var nameStr = names.toString();
+		document.write(nameStr+"<br>");
+
+		// Creating New Arrays from Existing Arrays
+		// Cotenate two or more arrays using concat() funcitons
+		var cisDept = ["Mike", "Clayton", "Terrill", "Danny", "Jennifer"];
+		var dmpDept = ["Raymond", "Cynthia", "Bryan"];
+		// var itDiv = cis.concat(dmp);
+		var itDiv = cisDept.concat(dmpDept);
+		document.writeln(itDiv+"<br>");
+		itDiv = dmpDept.concat(cisDept);
+		document.writeln(itDiv+"<br>");
+
+		// The splice() function creates a new array from the contents of an existing array.
+		var itDiv = ["Mike","Clayton","Terrill","Raymond","Cynthia","Danny","Jennifer"];
+		var dmpDept = itDiv.splice(3,3);
+		var cisDept = itDiv;
+		document.writeln(dmpDept+"<br>");  // Raymond,Cynthia,Danny
+		document.writeln(cisDept+"<br>"); // Mike,Clayton,Terrill,Jennifer
+	
+		/*Mutator Functions
+		JavaScript has a set of mutator functions that allow you to modify the contents of an
+		array without referencing the individual elements.*/
+		// Adding Elements to an Array
+		// The push() function adds an element to the end of an array
+		var nums = [1,2,3,4,5];
+		document.writeln("<br>"+nums); // 1,2,3,4,5
+		nums.push(6);
+		document.writeln("<br>"+nums); // 1,2,3,4,5,6
+
+		// Adding data to the beginning of the array
+		var nums = [2,3,4,5];
+		var newnum = 1;
+		var N = nums.length;
+		for (var i = N; i >= 0; --i) {
+			nums[i] = nums[i-1];
+		}
+		nums[0] = newnum;
+		document.writeln("<br>"+nums); // 1,2,3,4,5
+		// This code becomes more inefficient as the number of elements stored in the array increases.
+		// The mutator function for adding array elements to the beginning of an array is un
+		// shift().
+		var nums = [2,3,4,5];
+		document.writeln("<br>"+nums); // 2,3,4,5
+		var newnum = 1;
+		nums.unshift(newnum);
+		document.writeln("<br>"+nums); // 1,2,3,4,5
+		nums = [3,4,5];
+		nums.unshift(newnum,1,2);
+		document.writeln("<br>"+nums); // 1,2,3,4,5
+		// The second call to unshift() demonstrates that you can add multiple elements to an
+		// array with one call to the function.
+
+		// Removing an element from the end of an array is easy using the pop() mutator function
+		var nums = [1,2,3,4,5,9];
+		nums.pop();
+		document.writeln("<br>"+nums); // 1,2,3,4,5
+
+		// Remove elements from the beginnig of the array
+		var nums = [9,1,2,3,4,5];
+		document.writeln("<br>"+nums);
+		for (var i = 0; i < nums.length; ++i) {
+			nums[i] = nums[i+1];
+		}
+		document.writeln("<br>"+nums); // 1,2,3,4,5,
+
+		// The mutator function we need to remove an element from the beginning of an array is
+		// shift().
+		var nums = [9,1,2,3,4,5];
+		nums.shift();
+		document.writeln("<br>"+nums); // 1,2,3,4,5
+
+		// Adding and Removing Elements from the Middle of an Arrays
+		// The following program adds elements to the middle of an array:
+		var nums = [1,2,3,7,8,9];
+		var newElements = [4,5,6];
+		nums.splice(3,0,newElements);
+		document.writeln("<br>"+nums); // 1,2,3,4,5,6,7,8,9
+
+		// The elements spliced into an array can be any list of items passed to the function, not necessarily a named array of items. For example:
+		var nums = [1,2,3,7,8,9];
+		nums.splice(3,0,4,5,6);
+		document.writeln("<br>"+nums);
+
+		// Here is an example of using splice() to remove elements from an array
+		var nums = [1,2,3,100,200,300,400,4,5];
+		nums.splice(3,4);
+		document.writeln("<br>"+nums); // 1,2,3,4,5
+	</script>
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Object in Javascript</title>
+</head>
+<body>
+	<script type="text/javascript">
+		
+		// Object in Javascript
+		var myCar = new Object();
+		myCar.make = "Ford";
+		myCar.model = "Mustang";
+		myCar.year = 1969;
+
+		// Access the properties of myCar as follows
+		
+		// Using dot notaion
+		document.writeln(myCar.make+"<br>");
+
+		// Using third bracket
+		document.writeln(myCar["make"]+"<br>");
+
+		// Creating object using object initializer
+		var object = {
+		  foo: "bar",
+		  age: 42,
+		  baz: { myProp: 12 }
+		}
+
+		// Accessing nested object properties
+		document.writeln(object.baz.myProp+"<br>");
+
+		// Duplicate property names
+		// When using the same name for our properties, the second property will overwrite the first.
+		var a = {x: 1, x: 2};
+		document.writeln(a.x+"<br>"); // { x: 2}
+
+		// Create an object with constructor function
+		function Car(make, model, year) {
+		  this.make = make;
+		  this.model = model;
+		  this.year = year;
+		}
+
+		// Now you can create an object called mycar as follows:
+		var mycar = new Car("Eagle", "Talon TSi", 1993);
+		var brief_about_car = "The Car "+myCar.make+" which model name is "+myCar.model+" built in "+myCar.year;
+		document.writeln(brief_about_car+"<br>");  
+
+		// You can create any number of car objects by calls to new. For example,
+		var kenscar = new Car("Nissan", "300ZX", 1992);
+		var vpgscar = new Car("Mazda", "Miata", 1990);
+
+		// An object can have a property that is itself another object
+		function Person(name, age, sex) {
+		  this.name = name;
+		  this.age = age;
+		  this.sex = sex;
+		}
+
+		// and then instantiate two new person objects as follows
+		var rand = new Person("Rand McKinnon", 33, "M");
+		var ken = new Person("Ken Jones", 39, "M");
+
+		// Rewrite the denition of car as follows
+		function Car(make, model, year, owner) {
+		  this.make = make;
+		  this.model = model;
+		  this.year = year;
+		  this.owner = owner;
+		}
+
+		// To instantiate the new objects, you then use the following:
+		var car1 = new Car("Eagle", "Talon TSi", 1993, rand);
+		var car2 = new Car("Nissan", "300ZX", 1992, ken);
+
+		var owner_of_car = "The owner of the car is "+car1.owner.name+" and his age is "+car1.owner.age;
+		document.writeln(owner_of_car+"<br>");
+		console.log(car1);
+		// document.writeln(car1.owner+"<br>");
+
+		// Using the Object.create method
+		// Animal properties and method encapsulation
+		var Animal = {
+		  type: "Invertebrates", // Default value of properties
+		  // Method which will display type of Animal
+		  displayType : function(){  
+		    console.log(this.type);
+		  }
+		}
+
+		// Create new animal type called animal1 
+		var animal1 = Object.create(Animal);
+		animal1.displayType(); // Output:Invertebrates
+
+		// Create new animal type called Fishes
+		var fish = Object.create(Animal);
+		fish.type = "Fishes";
+		fish.displayType(); // Output:Fishes
+
+
+		// Defining Methods
+		// objectName.methodname = function_name;
+		// where objectName is an existing object, methodname is the name you are assigning to the method, 
+		// and function_name is the name of the function.
+		var myObj = {
+		  myMethod: function(params) {
+		    // ...do something
+		  }
+		};
+
+		// You can then call the method in the context of the object as follows:
+		// myObj.myMethod(params);
+
+		// You can define methods for an object type by including a method definition in the object constructor function.
+		function displayCar() {
+		  var result = "A Beautiful " + this.year + " " + this.make
+		    + " " + this.model;
+		  // pretty_print(result);
+		  document.writeln(result+"<br>");
+		}
+
+		// Redefine the car constructor function
+		function Car(make, model, year, owner) {
+		  this.make = make;
+		  this.model = model;
+		  this.year = year;
+		  this.owner = owner;
+		  this.displayCar = displayCar;
+		}
+
+		car1.displayCar();
+		car2.displayCar(); 
+
+		// Setter and Getter in JS
+
+		var o = {
+		  a: 7,
+		  get b() { 
+		    return this.a + 1;
+		  },
+		  set c(x) {
+		    this.a = x / 2;
+		  }
+		};
+
+		console.log(o.a); // 7
+		console.log(o.b); // 8
+		o.c = 50;
+		console.log(o.a); // 25
+
+		// The o object's properties are:
+		//     o.a — a number
+		//     o.b — a getter that returns o.a plus 1
+		//     o.c — a setter that sets the value of o.a to half of the value o.c is being set to
+
+
+		function Checking(amount) {
+			this.balance = amount; // property
+			this.deposit = deposit; // function
+			this.withdraw = withdraw; // function
+			this.toString = toString; // function
+		}
+		function deposit(amount) {
+			this.balance += amount;
+		}
+		function withdraw(amount) {
+			if (amount <= this.balance) {
+				this.balance -= amount;
+			}
+			if (amount > this.balance) {
+				document.write("<br>"+"Insufficient funds");
+			}
+		}
+		function toString() {
+			return "Balance: " + this.balance;
+		}
+
+		var account = new Checking(500);
+		account.deposit(1000);
+		document.write("<br>"+account.toString()); // Balance: 1500
+		account.withdraw(750);
+		document.write("<br>"+account.toString()); // Balance: 750
+		account.withdraw(800); // displays "Insufficient funds"
+		document.write("<br>"+account.toString()); // Balance: 750
+	</script>
+</body>
+</html>
